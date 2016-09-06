@@ -1,0 +1,37 @@
+Lab 10
+Clojure Concurrency, Refs and Agents
+
+We will illustrate Clojure transactions that use software transactional 
+memory.We will have two account balances and two futures that concurrently 
+try to transfer from one balance to another. Sometimes the transfer will 
+succeed and sometimes it won't because another thread modified the data before 
+the transfer could complete.
+
+Create a Ref with an initial value of 1000 for one balance and with value 
+2000 for the second balance. Create an agent with an initial value of 1 to 
+reflect the number of completed transactions.
+
+Define a transfer function with five parameters, the "from" ref, the 
+"to" ref, the amount, the future number (1 or 2), and the waiting time 
+between subtracting the amount from the "from" balance and adding it to the "
+to" balance. This is where things could go wrong if another thread were making 
+changes. The transfer method will attempt a transaction which 
+     prints "Trying ", the future number, and the delay time 
+     alters the "from" ref by subtracting the amount
+     calls the Java sleep method to sleep for the given time 
+              (simulating processing)
+     alters the "to" ref by adding the amount
+     calls send-off to increment the agent which only executes when a 
+       transaction completes. Put the action in a do statement to print a 
+       transfer message first and then pass the inc function.
+
+Define two futures passing each a function to execute which uses the 
+dotimes method to repeat 10 times calling the transfer method from the 
+first balance to the second. The first thread uses an amount of 20 and a sleep 
+time of a random integer less than 100 milleseconds while the second 
+thread uses an amount of 15 and a sleep time of a random int less than 40 
+milleseconds. rand-int produces random integers.
+
+The futures work by side effect but dereference them to make sure they 
+finish. Display the results of the requested transfers, and show the final 
+amounts of both balances. 
