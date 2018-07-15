@@ -1,6 +1,5 @@
 # Concurrency
 
-###### This application is designed to  ...
-
 #### Technologies: `Clojure` 
 
+###### To illustrate Clojure transactions that use software transactional memory. 
